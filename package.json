@@ -1,0 +1,91 @@
+{
+  "name": "silverspoon-reservations",
+  "version": "1.0.0",
+  "description": "SilverSpoon reservations component",
+  "main": "./server/server.js",
+  "scripts": {
+    "start": "node ./server/server.js",
+    "test": "./node_modules/.bin/jest",
+    "test:watch": "./node_modules/.bin/jest --watch",
+    "test:coverage": "./node_modules/.bin/jest --coverage",
+    "build": "./node_modules/.bin/webpack",
+    "build:prod": "./node_modules/.bin/webpack --config './webpack.prod.config.js'",
+    "build:watch": "./node_modules/.bin/webpack -w",
+    "server-dev": "./node_modules/.bin/nodemon --inspect ./server/server.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "seed": "node ./server/db/seed.js"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      ".eslintrc.js",
+      "sampleData.js",
+      "webpack.config.js",
+      "bundle.js",
+      "/coverage/",
+      "knexfile.js",
+      "/server/db/seed.js",
+      "/server/db/migrations"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thesilverspoon/reservations-component.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thesilverspoon/reservations-component/issues"
+  },
+  "homepage": "https://github.com/thesilverspoon/reservations-component#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "jest": "^22.4.0",
+    "nodemon": "^1.15.1",
+    "react-test-renderer": "^16.2.0",
+    "supertest": "^3.0.0"
+  },
+  "dependencies": {
+    "babel-plugin-css-modules-transform": "^1.4.0",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.0",
+    "dotenv-webpack": "^1.5.5",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "express": "^4.16.2",
+    "faker": "^4.1.0",
+    "jquery": "^3.3.1",
+    "knex": "^0.14.4",
+    "mockdate": "^2.0.2",
+    "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
+    "morgan": "^1.9.0",
+    "pg": "^7.4.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-day-picker": "^7.0.7",
+    "react-dom": "^16.2.0",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-middleware": "^2.0.6"
+  }
+}

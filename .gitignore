@@ -1,0 +1,13 @@
+.env
+
+node_modules
+
+bundle.js
+bundle-prod.js
+
+coverage/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
