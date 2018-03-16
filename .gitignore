@@ -4,6 +4,8 @@ node_modules
 
 bundle.js
 bundle-prod.js
+reservationData.js
+infoListData.js
 
 coverage/
 
