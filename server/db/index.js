@@ -88,7 +88,7 @@ const addReservation = ({
 }) => genReservationSlots({ restaurantId, date })
   .then((slots) => {
     const requestedSlot = slots.reservations.find(item => item.time === time);
-
+    console.log(restaurantId);
     // check max Seats
     if (requestedSlot.remaining >= party) {
       return client.query(
