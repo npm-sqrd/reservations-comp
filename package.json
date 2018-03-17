@@ -13,7 +13,7 @@
     "build:watch": "./node_modules/.bin/webpack -w",
     "server-dev": "./node_modules/.bin/nodemon --inspect ./server/server.js",
     "lint": "./node_modules/.bin/eslint .",
-    "seed": "node ./server/db/seed.js"
+    "seed": "node ./server/db/newSeed.js"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",
@@ -80,6 +80,7 @@
     "moment-timezone": "^0.5.14",
     "morgan": "^1.9.0",
     "pg": "^7.4.1",
+    "pg-copy-streams": "^1.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-day-picker": "^7.0.7",
