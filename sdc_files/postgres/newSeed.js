@@ -1,4 +1,4 @@
-const fakeData = require('../util/dataGen');
+const fakeData = require('./dataGen');
 const { Client } = require('pg');
 const { exec } = require('child_process');
 
@@ -19,7 +19,7 @@ client.connect();
 
 fakeData.infoList(0, (done) => {
   if (done) {
-    const path1 = '/Users/MatBagnall/Desktop/matHr/Immersive/senior-portion/npm-sqrd-SDC/reservations-comp/server/db/seedPG.sql';
+    const path1 = '/Users/MatBagnall/Desktop/matHr/Immersive/senior-portion/npm-sqrd-SDC/reservations-comp/sdc_files/postgres/seedPG.sql';
     exec(`psql -f ${path1} silverspoon`, (err, result) => {
       if (err) {
         console.log(err);
