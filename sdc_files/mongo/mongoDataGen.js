@@ -1,8 +1,30 @@
 const moment = require('moment-timezone');
 const faker = require('faker');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const stream = fs.createWriteStream('reservationData.json');
+
+// mongoose.connect('mongodb://localhost/silverspoon');
+
+// mongoose schema and model
+
+// const restaurantSchema = mongoose.Schema({
+//   id: { type: Number, unique: true },
+//   name: String,
+//   seats: Number,
+//   reservations: [
+//     {
+//       date: String,
+//       time: Number,
+//       name: String,
+//       party: Number,
+//       timeStamp: String,
+//     },
+//   ],
+// });
+
+// const Restaurants = mongoose.model('reservations', restaurantSchema);
 
 const reservationGen = (num) => {
   const index = Math.min(Math.random() * 100);
@@ -72,35 +94,14 @@ const reservationsList = (num, cb) => {
   if (index < end) {
     stream.once('drain', () => reservationsList(index, cb));
   } else {
-    console.log('reservationData.json file complete!');
     cb(index);
   }
 };
 
-// const infoList = (num, cb) => {
-//   const end = 1e7;
-//   let index = num;
-//   let freeSpace = true;
-//   if (startIndex === '') {
-//     startIndex = num;
-//   }
-//   while (index < end && freeSpace) {
-//     const data = { id: index, name: faker.lorem.words(), seats: 30 };
-//     const dataStr = `${data.id},${data.name},${data.seats}\n`;
+reservationsList(9999990, (result) => {
+  if (result) {
+    console.log('reservationData.json file complete!');
+  }
+});
 
-//     freeSpace = streamOne.write(dataStr);
-//     index += 1;
-//     if (index % 500000 === 0) {
-//       console.log('index ==>', index);
-//     }
-//   }
-//   if (index < end) {
-//     streamOne.once('drain', () => infoList(index, cb));
-//   } else {
-//     console.log('infoListData.json file complete!');
-//     reservationsList(startIndex, cb);
-//   }
-// };
-
-
-module.exports = { reservationsList };
+module.exports.reservationsList = reservationsList;
