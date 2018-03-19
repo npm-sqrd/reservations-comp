@@ -1,30 +1,8 @@
 const moment = require('moment-timezone');
 const faker = require('faker');
 const fs = require('fs');
-const mongoose = require('mongoose');
 
 const stream = fs.createWriteStream('reservationData.json');
-
-// mongoose.connect('mongodb://localhost/silverspoon');
-
-// mongoose schema and model
-
-// const restaurantSchema = mongoose.Schema({
-//   id: { type: Number, unique: true },
-//   name: String,
-//   seats: Number,
-//   reservations: [
-//     {
-//       date: String,
-//       time: Number,
-//       name: String,
-//       party: Number,
-//       timeStamp: String,
-//     },
-//   ],
-// });
-
-// const Restaurants = mongoose.model('reservations', restaurantSchema);
 
 const reservationGen = (num) => {
   const index = Math.min(Math.random() * 100);
@@ -97,11 +75,5 @@ const reservationsList = (num, cb) => {
     cb(index);
   }
 };
-
-reservationsList(9999990, (result) => {
-  if (result) {
-    console.log('reservationData.json file complete!');
-  }
-});
 
 module.exports.reservationsList = reservationsList;
