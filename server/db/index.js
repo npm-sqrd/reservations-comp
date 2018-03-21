@@ -58,6 +58,7 @@ const genReservationSlots = ({ restaurantId, date }) => Promise.all([
     // results[2] has the max seats for the restaurant
 
     // create default reservations array with default values
+    console.log(results[1]);
     const returnedSlots = results[1].rows.map(row => ({
       time: row.time,
       remaining: Number(row.remaining),

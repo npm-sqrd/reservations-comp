@@ -6,12 +6,12 @@ const express = require('express');
 const cors = require('cors');
 
 // for postgres db:
-const restaurantsRouter = require('./routers/restaurants');
-const reservationsRouter = require('./routers/reservations');
+// const restaurantsRouter = require('./routers/restaurants');
+// const reservationsRouter = require('./routers/reservations');
 
 // ****** for mongodb if chosen as prefered db:
-// const restaurantsRouter = require('../sdc_files/mongo/routes/restaurants');
-// const reservationsRouter = require('../sdc_files/mongo/routes/reservations');
+const restaurantsRouter = require('../sdc_files/mongo/routes/restaurants');
+const reservationsRouter = require('../sdc_files/mongo/routes/reservations');
 
 const app = express();
 // const compiler = webpack(config);

@@ -26,7 +26,7 @@ const reservationGen = (num) => {
     const dateToday = moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
     const dateStr = dateObj.format('YYYY-MM-DD');
     // generate time slot between 5pm and 9pm(inc)
-    const timeSlot = Math.floor((Math.random() * (22 - 15)) + 15);
+    const timeSlot = Math.floor((Math.random() * (22 - 17)) + 17);
     // check to see if reservation already exists
     if (!resObj[`${dateStr}${timeSlot}`]) {
       // adds date and time combination as key to resObj
@@ -58,7 +58,7 @@ const reservationsList = (num, cb) => {
     const resArray = reservationGen(index);
     const data = {
       id: index,
-      name: faker.lorem.words(),
+      resName: faker.lorem.words(),
       seats: 30,
       reservations: resArray,
     };
