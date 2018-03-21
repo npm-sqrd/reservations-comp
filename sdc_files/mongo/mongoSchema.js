@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const restaurantSchema = mongoose.Schema({
   id: { type: Number, unique: true },
-  name: String,
+  resName: String,
   seats: Number,
   reservations: [
     {
+      restaurantId: Number,
       date: String,
       time: Number,
       name: String,
@@ -15,6 +16,8 @@ const restaurantSchema = mongoose.Schema({
   ],
 });
 
+restaurantSchema.index({ resName: 1 });
+
 const Restaurants = mongoose.model('reservations', restaurantSchema);
 
-module.exports = { Restaurants, restaurantSchema };
+module.exports = Restaurants;

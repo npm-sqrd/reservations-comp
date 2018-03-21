@@ -26,7 +26,7 @@ const reservationGen = (num) => {
     const dateToday = moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
     const dateStr = dateObj.format('YYYY-MM-DD');
     // generate time slot between 5pm and 9pm(inc)
-    const timeSlot = Math.floor((Math.random() * (22 - 15)) + 15);
+    const timeSlot = Math.floor((Math.random() * (22 - 17)) + 17);
     // check to see if reservation already exists
     if (!resObj[`${dateStr}${timeSlot}`]) {
       // adds date and time combination as key to resObj
@@ -58,7 +58,7 @@ const reservationsList = (num, cb) => {
     const resArray = reservationGen(index);
     const data = {
       id: index,
-      name: faker.lorem.words(),
+      resName: faker.lorem.words(),
       seats: 30,
       reservations: resArray,
     };
@@ -72,35 +72,8 @@ const reservationsList = (num, cb) => {
   if (index < end) {
     stream.once('drain', () => reservationsList(index, cb));
   } else {
-    console.log('reservationData.json file complete!');
     cb(index);
   }
 };
 
-// const infoList = (num, cb) => {
-//   const end = 1e7;
-//   let index = num;
-//   let freeSpace = true;
-//   if (startIndex === '') {
-//     startIndex = num;
-//   }
-//   while (index < end && freeSpace) {
-//     const data = { id: index, name: faker.lorem.words(), seats: 30 };
-//     const dataStr = `${data.id},${data.name},${data.seats}\n`;
-
-//     freeSpace = streamOne.write(dataStr);
-//     index += 1;
-//     if (index % 500000 === 0) {
-//       console.log('index ==>', index);
-//     }
-//   }
-//   if (index < end) {
-//     streamOne.once('drain', () => infoList(index, cb));
-//   } else {
-//     console.log('infoListData.json file complete!');
-//     reservationsList(startIndex, cb);
-//   }
-// };
-
-
-module.exports = { reservationsList };
+module.exports.reservationsList = reservationsList;
