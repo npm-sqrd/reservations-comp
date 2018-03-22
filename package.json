@@ -13,8 +13,10 @@
     "build:watch": "./node_modules/.bin/webpack -w",
     "server-dev": "./node_modules/.bin/nodemon --inspect ./server/server.js",
     "lint": "./node_modules/.bin/eslint .",
-    "seed": "node ./sdc_files/postgres/newSeed.js",
-    "seedMongo": "node ./sdc_files/mongo/seedMongo.js"
+    "seedPG": "node ./sdc_files/postgres/seedPG.js",
+    "seedMongo": "node ./sdc_files/mongo/seedMongo.js",
+    "mongoST": "node ./sdc_files/artillery/mongoArtilleryRun.js",
+    "pgST": "node ./sdc_files/artillery/pgArtilleryRun.js"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",
@@ -81,6 +83,7 @@
     "moment-timezone": "^0.5.14",
     "mongoose": "^5.0.10",
     "morgan": "^1.9.0",
+    "newrelic": "^3.2.0",
     "pg": "^7.4.1",
     "pg-copy-streams": "^1.2.0",
     "prop-types": "^15.6.0",

@@ -1,0 +1,30 @@
+config:
+  target: 'http://localhost:8081'
+  phases:
+    - duration: 60
+      arrivalCount: 6000
+  defaults:
+    # headers:
+    #   x-my-service-auth: '987401838271002188298567'
+  payload:
+    # path is relative to the location of the test script
+    path: "./requests.csv"
+    fields:
+      - "restaurantId"
+      - "date"
+      - "time"
+      - "name"
+      - "party"
+scenarios:
+  - flow:
+    - post:
+        url: "/reservations"
+        json:
+          restaurantId: "{{ restaurantId }}"
+          date: "{{ date }}"
+          time: "{{ time }}"
+          name: "{{ name }}"
+          party: "{{ party }}"
+        count: 10
+
+
