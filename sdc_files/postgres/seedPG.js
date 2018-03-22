@@ -20,7 +20,7 @@ client.connect();
 // pass in start amount, database (e.g. 'pg'), then callback
 fakeData.infoList(0, 'pg', (done) => {
   if (done) {
-    const path1 = '/Users/MatBagnall/Desktop/matHr/Immersive/senior-portion/npm-sqrd-SDC/reservations-comp/sdc_files/postgres/pgCommands.sql';
+    const path1 = './sdc_files/postgres/pgCommands.sql';
     exec(`psql -f ${path1} silverspoon`, (err, result) => {
       if (err) {
         console.log(err);
