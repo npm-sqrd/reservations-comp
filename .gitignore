@@ -7,6 +7,7 @@ bundle-prod.js
 reservationData.js
 infoListData.js
 
+newrelic_agent.log
 coverage/
 
 # Elastic Beanstalk Files
