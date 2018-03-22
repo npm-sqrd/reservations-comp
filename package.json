@@ -13,8 +13,10 @@
     "build:watch": "./node_modules/.bin/webpack -w",
     "server-dev": "./node_modules/.bin/nodemon --inspect ./server/server.js",
     "lint": "./node_modules/.bin/eslint .",
-    "seed": "node ./sdc_files/postgres/newSeed.js",
-    "seedMongo": "node ./sdc_files/mongo/seedMongo.js"
+    "seedPG": "node ./sdc_files/postgres/seedPG.js",
+    "seedMongo": "node ./sdc_files/mongo/seedMongo.js",
+    "mongoST": "node ./sdc_files/artillery/mongoArtilleryRun.js",
+    "pgST": "node ./sdc_files/artillery/pgArtilleryRun.js"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",

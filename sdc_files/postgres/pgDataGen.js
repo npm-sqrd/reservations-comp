@@ -6,7 +6,7 @@ const streamOne = fs.createWriteStream('infoListData.csv');
 const streamTwo = fs.createWriteStream('reservationData.csv');
 let startIndex = '';
 
-const reservationGen = (num) => {
+const reservationGen = (num, db) => {
   const index = Math.min(Math.random() * 100);
   const resObj = {};
   let count = 0;
@@ -42,20 +42,25 @@ const reservationGen = (num) => {
         name: faker.name.findName(),
         party: partySize,
       };
-      data += `${res.restaurantId},${res.date},${res.time},${res.name},${res.party}\n`;
+      if (db === 'mongo') {
+        res.timeStamp = moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
+        data += `${res.restaurantId},${res.date},${res.time},${res.name},${res.party},${res.timeStamp}\n`;
+      } else {
+        data += `${res.restaurantId},${res.date},${res.time},${res.name},${res.party}\n`;
+      }
       count += 1;
     }
   }
   return data;
 };
 
-const reservationsList = (num, cb) => {
+const reservationsList = (num, db, cb) => {
   const end = 1e7;
   let index = num;
   let freeSpace = true;
 
   while (index < end && freeSpace) {
-    const data = reservationGen(index);
+    const data = reservationGen(index, db);
     freeSpace = streamTwo.write(data);
     index += 1;
     if (index % 500000 === 0) {
@@ -63,7 +68,7 @@ const reservationsList = (num, cb) => {
     }
   }
   if (index < end) {
-    streamTwo.once('drain', () => reservationsList(index, cb));
+    streamTwo.once('drain', () => reservationsList(index, db, cb));
   } else {
     console.log('reservationData.csv file complete!');
     cb(index);
@@ -91,7 +96,7 @@ const infoList = (num, cb) => {
     streamOne.once('drain', () => infoList(index, cb));
   } else {
     console.log('infoListData.csv file complete!');
-    reservationsList(startIndex, cb);
+    reservationsList(startIndex, '', cb);
   }
 };
 
