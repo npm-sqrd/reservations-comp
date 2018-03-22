@@ -81,6 +81,7 @@
     "moment-timezone": "^0.5.14",
     "mongoose": "^5.0.10",
     "morgan": "^1.9.0",
+    "newrelic": "^3.2.0",
     "pg": "^7.4.1",
     "pg-copy-streams": "^1.2.0",
     "prop-types": "^15.6.0",

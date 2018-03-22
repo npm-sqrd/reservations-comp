@@ -4,3 +4,4 @@ node_modules
 bundle.js
 sampleData.js
 coverage/
+newrelic.js
