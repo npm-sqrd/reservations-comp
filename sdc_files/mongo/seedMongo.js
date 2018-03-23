@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/silverspoon');
 
-dataGen.reservationsList(0, (done) => {
+dataGen.reservationsList(0, '', (done) => {
   if (done) {
     const path = '../../../reservationData.json';
     exec(`mongoimport --db silverspoon --collection reservations --drop --file ${path}`, (err, result) => {

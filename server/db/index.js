@@ -88,10 +88,9 @@ const addReservation = ({
   restaurantId, date, time, name, party,
 }) => genReservationSlots({ restaurantId, date })
   .then((slots) => {
-    const requestedSlot = slots.reservations.find(item => item.time === time);
-    console.log(restaurantId);
+    const requestedSlot = slots.reservations.find(item => item.time === Number(time));
     // check max Seats
-    if (requestedSlot.remaining >= party) {
+    if (requestedSlot.remaining >= Number(party)) {
       return client.query(
         'INSERT INTO reservations (restaurantid, date, time, name, party) VALUES ($1,$2,$3,$4,$5)',
         [restaurantId, date, time, name, party],

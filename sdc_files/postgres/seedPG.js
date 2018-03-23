@@ -18,7 +18,7 @@ const client = new Client({
 client.connect();
 
 // pass in start amount, database (e.g. 'pg'), then callback
-fakeData.infoList(0, 'pg', (done) => {
+fakeData.infoList(0, '', (done) => {
   if (done) {
     const path1 = './sdc_files/postgres/pgCommands.sql';
     exec(`psql -f ${path1} silverspoon`, (err, result) => {

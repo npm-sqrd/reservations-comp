@@ -9,15 +9,12 @@ router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
   // res.set({ 'Access-Control-Allow-Origin': '*' });
-  console.log(req.body);
   db.addReservation(req.body)
     .then(() => {
-      // console.log(req.body);
       res.sendStatus(201);
     })
     .catch(() => {
       res.sendStatus(500);
-      // console.log('shit didn\'t work');
     });
 });
 
