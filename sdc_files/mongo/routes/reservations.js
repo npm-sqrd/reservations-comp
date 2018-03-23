@@ -10,7 +10,10 @@ router.use(bodyParser.json());
 
 router.post('/', (req, res) => {
   db.postHandler(req.body)
-    .then(() => res.send(201))
+    .then(() => {
+      console.log('request details:', req.body.restaurantId, req.body.name);
+      res.send(201)
+    })
     .catch(() => res.sendStatus(500));
 });
 

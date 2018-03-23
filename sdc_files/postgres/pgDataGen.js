@@ -42,9 +42,16 @@ const reservationGen = (num, db) => {
         name: faker.name.findName(),
         party: partySize,
       };
-      if (db === 'mongo') {
+      // setting up for artillery testing
+      if (db === 'mongo' || db === 'pg') {
+        const days = Math.floor(Math.random() * 90);
+        const dateBooked = moment.tz('America/Los_Angeles').add(days, 'days').format('YYYY-MM-DD');
+        res.date = dateBooked;
         res.timeStamp = moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
+        res.party = 2;
         data += `${res.restaurantId},${res.date},${res.time},${res.name},${res.party},${res.timeStamp}\n`;
+      } else if (db === 'pg') {
+        res.party = 2;
       } else {
         data += `${res.restaurantId},${res.date},${res.time},${res.name},${res.party}\n`;
       }
@@ -75,7 +82,7 @@ const reservationsList = (num, db, cb) => {
   }
 };
 
-const infoList = (num, cb) => {
+const infoList = (num, db, cb) => {
   const end = 1e7;
   let index = num;
   let freeSpace = true;
@@ -93,10 +100,10 @@ const infoList = (num, cb) => {
     }
   }
   if (index < end) {
-    streamOne.once('drain', () => infoList(index, cb));
+    streamOne.once('drain', () => infoList(index, db, cb));
   } else {
     console.log('infoListData.csv file complete!');
-    reservationsList(startIndex, '', cb);
+    reservationsList(startIndex, 'pg', cb);
   }
 };
 

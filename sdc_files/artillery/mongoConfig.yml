@@ -1,8 +1,8 @@
 config:
   target: 'http://localhost:8081'
   phases:
-    - duration: 60
-      arrivalCount: 600
+    - duration: 300
+      arrivalRate: 100
   defaults:
     # headers:
     #   x-my-service-auth: '987401838271002188298567'
@@ -19,7 +19,7 @@ config:
 scenarios:
   - flow:
     - post:
-        url: "/reservations"
+        url: "/reservations/"
         json:
           restaurantId: "{{ restaurantId }}"
           date: "{{ date }}"
@@ -27,6 +27,5 @@ scenarios:
           name: "{{ name }}"
           party: "{{ party }}"
           timeStamp: "{{ timeStamp }}"
-        # count: 10
 
 
