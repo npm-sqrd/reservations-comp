@@ -16,7 +16,7 @@
     "seedPG": "node ./sdc_files/postgres/seedPG.js",
     "seedMongo": "node ./sdc_files/mongo/seedMongo.js",
     "mongoST": "node ./sdc_files/artillery/mongoArtilleryRun.js",
-    "pgST": "node ./sdc_files/artillery/pgArtilleryRun.js"
+    "pgST": "node ./sdc_files/artillery/pgConfig.yml"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",
