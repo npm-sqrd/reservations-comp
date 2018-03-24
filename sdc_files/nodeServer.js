@@ -10,18 +10,19 @@ http.createServer((req, res) => {
   const { method, url } = req;
   const id = url.split('/')[2];
   const date = url.split('/')[4];
+  console.log(url);
   if (method === 'GET' && url === '/') {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     staticStream.pipe(res);
-  } else if (method === 'GET' && url.match('bundle.js')) {
+  } else if (method === 'GET' && /*url === '/bundle.js'*/ url.match('.js')) {
     const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
-  } else if (method === 'GET' && url === '/bundle-server.js') {
-    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle-server.js'), 'utf8');
-    res.writeHead(200, { 'Content-Type': 'text/javascript' });
-    stream.pipe(res);
+  // } else if (method === 'GET' && url === '/bundle-server.js') {
+  //   const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle-server.js'), 'utf8');
+  //   res.writeHead(200, { 'Content-Type': 'text/javascript' });
+  //   stream.pipe(res);
   } else if (method === 'GET' && url === `/restaurants/${id}/reservations/${date}`) {
     db.genReservationSlots(id, date, (err, data) => {
       if (err) {
