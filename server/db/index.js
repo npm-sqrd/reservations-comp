@@ -33,9 +33,14 @@ const bookingsToday = (restaurantId) => {
   );
 };
 
-const getOpenSeats = ({
-  restaurantId, date,
-}) => client.query(
+// const getOpenSeats = ({
+//   restaurantId, date,
+// }) => client.query(
+//   'SELECT time,(MAX(restaurants.seats)-SUM(party)) AS remaining FROM reservations INNER JOIN restaurants ON restaurants.id = reservations.restaurantid WHERE date=$1 AND restaurantid=$2 GROUP BY time',
+//   [date, restaurantId],
+// );
+
+const getOpenSeats = (restaurantId, date) => client.query(
   'SELECT time,(MAX(restaurants.seats)-SUM(party)) AS remaining FROM reservations INNER JOIN restaurants ON restaurants.id = reservations.restaurantid WHERE date=$1 AND restaurantid=$2 GROUP BY time',
   [date, restaurantId],
 );
@@ -47,9 +52,9 @@ const getMaxSeats = restaurantId => client.query(
 );
 
 
-const genReservationSlots = ({ restaurantId, date }) => Promise.all([
+const genReservationSlots = (restaurantId, date) => Promise.all([
   bookingsToday(restaurantId),
-  getOpenSeats({ restaurantId, date }),
+  getOpenSeats(restaurantId, date),
   getMaxSeats(restaurantId),
 ])
   .then((results) => {
@@ -86,7 +91,7 @@ const genReservationSlots = ({ restaurantId, date }) => Promise.all([
 
 const addReservation = ({
   restaurantId, date, time, name, party,
-}) => genReservationSlots({ restaurantId, date })
+}) => genReservationSlots(restaurantId, date)
   .then((slots) => {
     const requestedSlot = slots.reservations.find(item => item.time === Number(time));
     // check max Seats

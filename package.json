@@ -15,8 +15,8 @@
     "lint": "./node_modules/.bin/eslint .",
     "seedPG": "node ./sdc_files/postgres/seedPG.js",
     "seedMongo": "node ./sdc_files/mongo/seedMongo.js",
-    "mongoST": "node ./sdc_files/artillery/mongoArtilleryRun.js",
-    "pgST": "node ./sdc_files/artillery/pgConfig.yml"
+    "mongoST": "artillery run ./sdc_files/artillery/mongoConfig.yml",
+    "pgST": "artillery run ./sdc_files/artillery/pgConfig.yml"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/client/src/components/setupTests.js",
@@ -91,6 +91,7 @@
     "react": "^16.2.0",
     "react-day-picker": "^7.0.7",
     "react-dom": "^16.2.0",
+    "redis": "^2.8.0",
     "style-loader": "^0.20.2",
     "webpack": "^3.11.0",
     "webpack-dev-middleware": "^2.0.6"

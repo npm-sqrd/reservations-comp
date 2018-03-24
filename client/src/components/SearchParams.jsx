@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import moment from 'moment-timezone';
 
-import dayPickerStyles from './styles/dayPicker.css';
+// import dayPickerStyles from './styles/dayPicker.css';
 import styles from './styles/SearchParams.css';
-
-console.log('dayPickerStyles', dayPickerStyles);
 
 class SearchParams extends React.Component {
   constructor(props) {

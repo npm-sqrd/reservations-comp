@@ -8,7 +8,9 @@ reservationData.js
 infoListData.js
 
 newrelic_agent.log
+newrelic.js
 coverage/
+dump.rbd
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
