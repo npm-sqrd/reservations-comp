@@ -14,13 +14,15 @@ http.createServer((req, res) => {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     staticStream.pipe(res);
-  } else if (method === 'GET' && url.match('.js')) {
+  } else if (method === 'GET' && url.match('bundle.js')) {
     const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
+  } else if (method === 'GET' && url === '/bundle-server.js') {
+    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle-server.js'), 'utf8');
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    stream.pipe(res);
   } else if (method === 'GET' && url === `/restaurants/${id}/reservations/${date}`) {
-    // console.log('id and date ===>', id, date);
-    // db.genReservationSlots(id, date)
     db.genReservationSlots(id, date, (err, data) => {
       if (err) {
         res.writeHead(500);
@@ -30,29 +32,12 @@ http.createServer((req, res) => {
         res.end(JSON.stringify(data));
       }
     });
-// .then((result) => {
-//   res.writeHead(200, { 'Content-Type': 'application/json' });
-//   res.end(JSON.stringify(result));
-// })
-// .catch(() => {
-//   res.writeHead(500);
-//   res.end();
-// });
   } else if (method === 'POST' && url === '/reservations') {
     let body = [];
     req.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {
       body = Buffer.concat(body).toString();
-      // db.addReservation(JSON.parse(body))
-      //   .then((result) => {
-      //     res.writeHead(201, { 'Content-Type': 'application/json' });
-      //     res.end(JSON.stringify(result));
-      //   })
-      //   .catch((err) => {
-      //     res.writeHead(500);
-      //     res.end(err);
-      //   });
       db.addReservation(JSON.parse(body), (err, data) => {
         if (err) {
           res.writeHead(400);

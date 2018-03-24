@@ -3,6 +3,7 @@
 node_modules
 
 bundle.js
+bundle-server.js
 bundle-prod.js
 reservationData.js
 infoListData.js
@@ -10,7 +11,7 @@ infoListData.js
 newrelic_agent.log
 newrelic.js
 coverage/
-dump.rbd
+dump.rdb
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
