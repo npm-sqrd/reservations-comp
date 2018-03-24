@@ -12,9 +12,14 @@ router.get('/:id/reservations/:date?', (req, res) => {
     ? req.params.date
     : moment(new Date()).tz('America/Los_Angeles').format('YYYY-MM-DD');
 
-  db.getHandler(req.params.id, dateParam)
-    .then(result => res.send(result))
-    .catch(() => res.sendStatus(500));
+  db.genReservationSlots(req.params.id, dateParam)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
 });
+
 
 module.exports = router;

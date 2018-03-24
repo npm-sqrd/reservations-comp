@@ -12,7 +12,7 @@ router.get('/:id/reservations/:date?', (req, res) => {
 
   // console.log(req.params.id, dateParam);
   // res.set({ 'Access-Control-Allow-Origin': '*' });
-  db.genReservationSlots({ restaurantId: req.params.id, date: dateParam })
+  db.genReservationSlots(req.params.id, dateParam)
     .then((result) => {
       res.send(result);
     })
