@@ -63,7 +63,7 @@ const genReservationSlots = ((resId, date, cb) => {
         } else {
           const openSlots = genSlots({ restaurantData: resData, date });
           const result = JSON.stringify(openSlots);
-          redisClient.setex(key, 10, result);
+          redisClient.setex(key, 180, result);
           cb(null, result);
         }
       });
@@ -92,7 +92,15 @@ const addReservation = ((request, cb) => {
           if (error) {
             cb(error, null);
           } else {
-            cb(null, result);
+            parsedData.reservations.forEach((item, i) => {
+              const remaining = item.remaining - newRes.party;
+              if (item.time === newRes.time) {
+                parsedData.reservations[i].remaining = remaining;
+              }
+            });
+            const slots = JSON.stringify(parsedData);
+            redisClient.setex(request.restaurantId, 180, slots);
+            cb(null, slots);
           }
         });
       }

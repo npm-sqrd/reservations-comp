@@ -1,7 +1,8 @@
 .env
 
 node_modules
-
+client/dist/res-bundle.js
+client/dist/res-bundle-server.js
 bundle.js
 bundle-server.js
 bundle-prod.js

@@ -8,7 +8,7 @@ const common = {
 };
 
 const client = {
-  entry: path.join(__dirname, '/client/src/serverView.js'),
+  entry: path.join(__dirname, '/client/src/clientView.js'),
   module: {
     rules: [
       {
@@ -32,15 +32,17 @@ const client = {
       },
     ]
   },
-
   output: {
     filename: 'res-bundle.js',
     path: path.join(__dirname, '/client/dist')
-  }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 const server = {
-  entry: path.join(__dirname, '/client/src/clientView.js'),
+  entry: path.join(__dirname, '/client/src/serverView.js'),
   target: 'node',
   output: {
     path: path.join(__dirname, '/client/dist'),
@@ -69,7 +71,10 @@ const server = {
         loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
       },
     ]
-  }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
 
 module.exports = [

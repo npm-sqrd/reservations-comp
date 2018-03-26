@@ -10,7 +10,7 @@ http.createServer((req, res) => {
   const { method, url } = req;
   const id = url.split('/')[2];
   const date = url.split('/')[4];
-  console.log(url);
+
   if (method === 'GET' && url === '/') {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -20,7 +20,6 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
   } else if (method === 'GET' && url === '/res-bundle-server.js') {
-    console.log('request received', url);
     const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle-server.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
@@ -31,7 +30,7 @@ http.createServer((req, res) => {
         res.end();
       } else {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(data));
+        res.end(data);
       }
     });
   } else if (method === 'POST' && url === '/reservations') {
@@ -46,7 +45,7 @@ http.createServer((req, res) => {
           res.end(err);
         } else {
           res.writeHead(201, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(data));
+          res.end(data);
         }
       });
     });

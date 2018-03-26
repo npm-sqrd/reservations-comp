@@ -9,7 +9,7 @@ const getReservationInfo = (id, date, callback) => {
     crossDomain: true,
     success: (data) => {
       // console.log('ajax GET success', data);
-      callback(null, JSON.parse(data));
+      callback(null, data);
     },
     error: (jqxhr, status, error) => {
       // console.log('ajax GET error', jqxhr, status, error);
