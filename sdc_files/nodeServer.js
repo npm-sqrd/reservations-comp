@@ -10,6 +10,7 @@ http.createServer((req, res) => {
   const { method, url } = req;
   const id = url.split('/')[2];
   const date = url.split('/')[4];
+  console.log(url);
   if (method === 'GET' && url === '/') {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
