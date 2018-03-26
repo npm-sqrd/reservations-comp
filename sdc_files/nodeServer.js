@@ -14,12 +14,13 @@ http.createServer((req, res) => {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     staticStream.pipe(res);
-  } else if (method === 'GET' && url === '/bundle.js') {
-    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle.js'), 'utf8');
+  } else if (method === 'GET' && url === '/res-bundle.js') {
+    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
-  } else if (method === 'GET' && url === '/bundle-server.js') {
-    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle-server.js'), 'utf8');
+  } else if (method === 'GET' && url === '/res-bundle-server.js') {
+    console.log('request received', url);
+    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle-server.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
   } else if (method === 'GET' && url === `/restaurants/${id}/reservations/${date}`) {
