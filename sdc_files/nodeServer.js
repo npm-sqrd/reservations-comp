@@ -1,10 +1,12 @@
 require('newrelic');
+require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const db = require('./mongo/index');
 
-const port = 3005;
+
+const port = 8080;
 
 http.createServer((req, res) => {
   const { method, url } = req;

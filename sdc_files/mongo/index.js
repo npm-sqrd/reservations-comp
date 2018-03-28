@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const Restaurants = require('./mongoSchema');
 const redisClient = require('../redisClient');
 
-mongoose.connect('mongodb://localhost/silverspoon');
-
-require('dotenv').config();
+mongoose.connect('mongodb://mongo/silverspoon');
 
 const bookingsToday = (restaurantData) => {
   const todayStr = moment(new Date()).tz('America/Los_Angeles').format('YYYY-MM-DD');
@@ -63,7 +61,7 @@ const genReservationSlots = ((resId, date, cb) => {
         } else {
           const openSlots = genSlots({ restaurantData: resData, date });
           const result = JSON.stringify(openSlots);
-          redisClient.setex(key, 180, result);
+          redisClient.setex(key, 20, result);
           cb(null, result);
         }
       });
@@ -98,8 +96,9 @@ const addReservation = ((request, cb) => {
                 parsedData.reservations[i].remaining = remaining;
               }
             });
+            parsedData.madeToday += 1;
             const slots = JSON.stringify(parsedData);
-            redisClient.setex(request.restaurantId, 180, slots);
+            redisClient.setex(request.restaurantId, 20, slots);
             cb(null, slots);
           }
         });

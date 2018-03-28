@@ -6,8 +6,8 @@ client/dist/res-bundle-server.js
 bundle.js
 bundle-server.js
 bundle-prod.js
-reservationData.js
-infoListData.js
+reservationData.json
+infoListData.json
 
 newrelic_agent.log
 newrelic.js

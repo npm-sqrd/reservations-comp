@@ -3,8 +3,8 @@ config:
   # http:
   #   pool: 200
   phases:
-    - duration: 600
-      arrivalCount: 50000
+    - duration: 60
+      arrivalCount: 5000
   variables:
     date:
       - '2018-03-23'
@@ -249,6 +249,6 @@ scenarios:
         # - 4699359
         # - 2896340
         # - 582213
-      count: 10
+      count: 1
 
   
