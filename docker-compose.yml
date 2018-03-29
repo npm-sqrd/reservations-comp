@@ -12,7 +12,7 @@ services:
       - "6379:6379"
 
   web:
-    image: matgbx/app:latest
+    image: matgbx/ss_reservation_app:latest
     ports:
       - "8080:8080"
     depends_on:

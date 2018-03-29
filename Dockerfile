@@ -1,8 +1,8 @@
 FROM node:carbon
 
-RUN mkdir /app
+RUN mkdir /ss_reservation_app
 
-WORKDIR /app
+WORKDIR /ss_reservation_app
 
 ADD package.json ./
 
