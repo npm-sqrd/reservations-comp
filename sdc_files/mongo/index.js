@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Restaurants = require('./mongoSchema');
 const redisClient = require('../redisClient');
 
-const MONGO_HOST = 'mongodb://ec2-13-59-231-129.us-east-2.compute.amazonaws.com/silverspoon';
+const MONGO_HOST = process.env.MONGO_HOST || 'mongodb://ec2-13-59-231-129.us-east-2.compute.amazonaws.com/silverspoon';
 mongoose.connect(MONGO_HOST);
 
 const bookingsToday = (restaurantData) => {
