@@ -10,7 +10,7 @@ const port = 8080;
 
 http.createServer((req, res) => {
   const { method, url } = req;
-  const id = url.split('/')[2];
+  const name = url.split('/')[2];
   const date = url.split('/')[4];
 
   if (method === 'GET' && url === '/') {
@@ -25,7 +25,8 @@ http.createServer((req, res) => {
     const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle-server.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
-  } else if (method === 'GET' && url === `/restaurants/${id}/reservations/${date}`) {
+  } else if (method === 'GET' && url === `/restaurants/${name}/reservations/${date}`) {
+    const id = name.slice(10);
     db.genReservationSlots(id, date, (err, data) => {
       if (err) {
         res.writeHead(500);
