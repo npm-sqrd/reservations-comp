@@ -2,9 +2,9 @@ import $ from 'jquery';
 
 const BASE_URL = process.env.BASE_URL ? process.env.BASE_URL : '';
 
-const getReservationInfo = (resName, date, callback) => {
+const getReservationInfo = (name, date, callback) => {
   $.ajax({
-    url: `${BASE_URL}/restaurants/${resName}/reservations/${date}`,
+    url: `${BASE_URL}/restaurants/${name}/reservations/${date}`,
     method: 'GET',
     crossDomain: true,
     success: (data) => {

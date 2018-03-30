@@ -45,7 +45,7 @@ class Reservation extends React.Component {
   }
 
   getAvailabilityInfo(date, time, party) {
-    helper.getReservationInfo(this.props.resName, date, (err, data) => {
+    helper.getReservationInfo(this.props.name, date, (err, data) => {
       if (!err) {
         this.setState({
           availabilityInfo: data.reservations,
@@ -73,7 +73,7 @@ class Reservation extends React.Component {
       });
     } else {
       helper.requestReservation(
-        this.props.resName, this.state.date, time, this.state.name, this.state.party,
+        this.props.name, this.state.date, time, this.state.name, this.state.party,
         (err) => {
           if (!err) {
             this.setState({
@@ -120,7 +120,7 @@ class Reservation extends React.Component {
 }
 
 Reservation.propTypes = {
-  resName: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default Reservation;
