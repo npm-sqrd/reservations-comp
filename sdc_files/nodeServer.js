@@ -1,65 +1,54 @@
 require('newrelic');
+require('dotenv').config();
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const db = require('./mongo/index');
 
-const port = 3005;
+
+const port = 8080;
 
 http.createServer((req, res) => {
   const { method, url } = req;
-  const id = url.split('/')[2];
+  const name = url.split('/')[2];
   const date = url.split('/')[4];
+
   if (method === 'GET' && url === '/') {
     const staticStream = fs.createReadStream(path.join(__dirname, '../client/dist/index.html'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/html' });
     staticStream.pipe(res);
-  } else if (method === 'GET' && url.match('.js')) {
-    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/bundle.js'), 'utf8');
+  } else if (method === 'GET' && url === '/res-bundle.js') {
+    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle.js'), 'utf8');
     res.writeHead(200, { 'Content-Type': 'text/javascript' });
     stream.pipe(res);
-  } else if (method === 'GET' && url === `/restaurants/${id}/reservations/${date}`) {
-    // console.log('id and date ===>', id, date);
-    // db.genReservationSlots(id, date)
+  } else if (method === 'GET' && url === '/res-bundle-server.js') {
+    const stream = fs.createReadStream(path.join(__dirname, '../client/dist/res-bundle-server.js'), 'utf8');
+    res.writeHead(200, { 'Content-Type': 'text/javascript' });
+    stream.pipe(res);
+  } else if (method === 'GET' && url === `/restaurants/${name}/reservations/${date}`) {
+    const id = name.slice(10);
     db.genReservationSlots(id, date, (err, data) => {
       if (err) {
         res.writeHead(500);
         res.end();
       } else {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(data));
+        res.end(data);
       }
     });
-// .then((result) => {
-//   res.writeHead(200, { 'Content-Type': 'application/json' });
-//   res.end(JSON.stringify(result));
-// })
-// .catch(() => {
-//   res.writeHead(500);
-//   res.end();
-// });
   } else if (method === 'POST' && url === '/reservations') {
     let body = [];
     req.on('data', (chunk) => {
       body.push(chunk);
     }).on('end', () => {
       body = Buffer.concat(body).toString();
-      // db.addReservation(JSON.parse(body))
-      //   .then((result) => {
-      //     res.writeHead(201, { 'Content-Type': 'application/json' });
-      //     res.end(JSON.stringify(result));
-      //   })
-      //   .catch((err) => {
-      //     res.writeHead(500);
-      //     res.end(err);
-      //   });
       db.addReservation(JSON.parse(body), (err, data) => {
         if (err) {
           res.writeHead(400);
           res.end(err);
         } else {
           res.writeHead(201, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(data));
+          res.end(data);
         }
       });
     });

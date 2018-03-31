@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const Restaurants = require('./mongoSchema');
 const redisClient = require('../redisClient');
 
-mongoose.connect('mongodb://localhost/silverspoon');
-
-require('dotenv').config();
+const MONGO_HOST = 'mongodb://ec2-13-59-231-129.us-east-2.compute.amazonaws.com/silverspoon';
+// const MONGO_HOST = process.env.MONGO_HOST;
+mongoose.connect(MONGO_HOST);
 
 const bookingsToday = (restaurantData) => {
   const todayStr = moment(new Date()).tz('America/Los_Angeles').format('YYYY-MM-DD');
@@ -32,31 +32,6 @@ const getOpenSeats = (({ restaurantData, date }) => {
   });
   return slots;
 });
-
-// const genReservations = (({ restaurantData, date }) => Promise.all([
-//   bookingsToday(restaurantData),
-//   getOpenSeats({ restaurantData, date }),
-// ])
-//   .then((results) => {
-//     // console.log('==>', results[1]);
-//     const returnedSlots = [];
-//     const timeSlots = Object.keys(results[1]);
-//     timeSlots.forEach((timeSlot) => {
-//       returnedSlots.push({
-//         time: timeSlot,
-//         remaining: results[1][timeSlot],
-//       });
-//     });
-//     const output = {
-//       madeToday: Number(results[0]),
-//       reservations: returnedSlots,
-//     };
-//     return output;
-//   }));
-
-// const genReservationSlots = ((resId, date) =>
-//   Restaurants.find({ id: resId })
-//     .then(data => genReservations({ restaurantData: data, date })));
 
 const genSlots = (({ restaurantData, date }) => {
   const bookings = bookingsToday(restaurantData);
@@ -86,35 +61,15 @@ const genReservationSlots = ((resId, date, cb) => {
         if (error) {
           cb(error, null);
         } else {
-          // console.log(resData);
           const openSlots = genSlots({ restaurantData: resData, date });
           const result = JSON.stringify(openSlots);
-          redisClient.setex(key, 10, result);
+          redisClient.setex(key, 20, result);
           cb(null, result);
         }
       });
     }
   });
 });
-
-// const addReservation = (request =>
-//   genReservationSlots(request.restaurantId)
-//     .then((data) => {
-//       const requestedSlot = data.reservations.find(item => item.time === request.time);
-//       const todayStr = moment(new Date()).tz('America/Los_Angeles').format('YYYY-MM-DD');
-//       if (requestedSlot.remaining >= request.party) {
-//         const newRes = {
-//           restaurantId: request.restaurantId,
-//           date: request.date,
-//           time: request.time,
-//           name: request.name,
-//           party: request.party,
-//           timeStamp: todayStr,
-//         };
-//         return Restaurants.update({ id: request.restaurantId }, { $push: { reservations: newRes } });
-//       }
-//     })
-// );
 
 const addReservation = ((request, cb) => {
   genReservationSlots(request.restaurantId, request.date, (err, data) => {
@@ -137,7 +92,16 @@ const addReservation = ((request, cb) => {
           if (error) {
             cb(error, null);
           } else {
-            cb(null, result);
+            parsedData.reservations.forEach((item, i) => {
+              const remaining = item.remaining - newRes.party;
+              if (item.time === newRes.time) {
+                parsedData.reservations[i].remaining = remaining;
+              }
+            });
+            parsedData.madeToday += 1;
+            const slots = JSON.stringify(parsedData);
+            redisClient.setex(request.restaurantId, 20, slots);
+            cb(null, slots);
           }
         });
       }

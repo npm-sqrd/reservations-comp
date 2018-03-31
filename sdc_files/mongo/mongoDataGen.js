@@ -50,15 +50,15 @@ const reservationGen = (num) => {
 };
 
 const reservationsList = (num, cb) => {
-  const end = 1e7;
+  const end = 12e6;
   let index = num;
   let freeSpace = true;
 
-  while (index < end && freeSpace) {
+  while (index <= end && freeSpace) {
     const resArray = reservationGen(index);
     const data = {
       id: index,
-      resName: faker.lorem.words(),
+      resName: `restaurant${index}`,
       seats: 30,
       reservations: resArray,
     };

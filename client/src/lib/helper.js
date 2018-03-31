@@ -2,14 +2,13 @@ import $ from 'jquery';
 
 const BASE_URL = process.env.BASE_URL ? process.env.BASE_URL : '';
 
-const getReservationInfo = (id, date, callback) => {
+const getReservationInfo = (name, date, callback) => {
   $.ajax({
-    url: `${BASE_URL}/restaurants/${id}/reservations/${date}`,
+    url: `${BASE_URL}/restaurants/${name}/reservations/${date}`,
     method: 'GET',
     crossDomain: true,
     success: (data) => {
-      // console.log('ajax GET success', data);
-      callback(null, JSON.parse(data));
+      callback(null, data);
     },
     error: (jqxhr, status, error) => {
       // console.log('ajax GET error', jqxhr, status, error);
@@ -18,7 +17,8 @@ const getReservationInfo = (id, date, callback) => {
   });
 };
 
-const requestReservation = (id, date, time, name, party, callback) => {
+const requestReservation = (resName, date, time, name, party, callback) => {
+  const id = resName.slice(10);
   $.ajax({
     url: `${BASE_URL}/reservations`,
     method: 'POST',
